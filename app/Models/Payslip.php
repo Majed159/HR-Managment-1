@@ -4,9 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payslip extends Model
 {
     /** @use HasFactory<\Database\Factories\PayslipFactory> */
     use HasFactory;
+    protected $fillable = ['employee_id', 'period_start', 'period_end', 'gross_pay', 'net_pay', 'deductions', 'issued_at'];
+
+
+    protected $casts = [
+        'period_start' => 'date',
+        'period_end' => 'date',
+        'gross_pay' => 'decimal:2',
+        'deductions' => 'decimal:2',
+        'net_pay' => 'decimal:2',
+        'issued_at' => 'datetime',
+    ];
+       public function employee() : BelongsTo
+     {
+        return $this->belongsTo(Employee::class);
+    }
 }
