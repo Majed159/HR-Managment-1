@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->foreignId('department_id')->constrained()->cascadeOnDelete();
 
-            $table->string('title');
+            $table->string('title')->default('Employee');
             $table->text('description')->nullable();
 
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
             $table->date('work_date');
             $table->timestamp('clock_in')->nullable();
-            $table->timestamp('clodk_out|')->nullable();
+            $table->timestamp('clock_out')->nullable();
             $table->string('status')->default('present'); // present, late, absent
             $table->timestamps();
 

@@ -11,15 +11,15 @@ class Attendance extends Model
 {
     /** @use HasFactory<\Database\Factories\AttendanceFactory> */
     use HasFactory;
-    protected $fillable = ['employee_id', 'work_date', 'status', 'check_in', 'check_out'];
+    protected $fillable = ['employee_id', 'work_date', 'status', 'clock_in', 'clock_out'];
 
     #[Override]
     protected function casts()
     {
         return [
             'work_date' => 'date',
-            'check_in' => 'datetime',
-            'check_out' => 'datetime',
+            'clock_in' => 'datetime',
+            'clock_out' => 'datetime',
         ];
     }
 
