@@ -40,7 +40,7 @@ class User extends Authenticatable implements PasskeyUser
      * @return array<string, string>
      */
 
-    public const ROLES= ['admin','hr','manger','employee'];
+    public const ROLES = ['admin', 'hr', 'manager', 'employee'];
     protected function casts(): array
     {
         return [
