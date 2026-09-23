@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Attribute;
+use Illuminate\Database\Eloquent\Attributes\Appends;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Override;
-
+#[Appends(['full_name','avatar_url'])]
 class Employee extends Model
 {
     /** @use HasFactory<\Database\Factories\EmployeeFactory> */
@@ -42,6 +44,11 @@ class Employee extends Model
         return Attribute::get(fn ():string=>"{$this->first_name} {$this->last_name}");
 
     }
+    protected function avatarUrl(): Attribute
+    {
+        return Attribute::get(fn():?string=>$this->avatar_path ? Storage::url($this->avatar_path) : null);
+    }
+    
     public function department():BelongsTo
     {
         return $this->belongsTo(Department::class);
