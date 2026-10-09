@@ -37,6 +37,7 @@ class PositionController extends Controller
             'description' => ['nullable','string'],
         ]);
 
+        $data['name'] = $data['title'];
         Position::create($data);
 
         return Redirect::route('positions.index');
@@ -50,6 +51,7 @@ class PositionController extends Controller
             'description' => ['nullable','string'],
         ]);
 
+        $data['name'] = $data['title'];
         $position->update($data);
 
         return Redirect::route('positions.index');

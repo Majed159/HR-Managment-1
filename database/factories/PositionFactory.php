@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Department;
 use App\Models\Position;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,8 +18,13 @@ class PositionFactory extends Factory
      */
     public function definition(): array
     {
+        $title = fake()->jobTitle();
+
         return [
-            //
+            'name' => $title,
+            'department_id' => Department::factory(),
+            'title' => $title,
+            'description' => fake()->sentence(),
         ];
     }
 }

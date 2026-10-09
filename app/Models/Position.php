@@ -11,7 +11,7 @@ class Position extends Model
     /** @use HasFactory<\Database\Factories\PositionFactory> */
 
     use HasFactory;
-    protected $fillable = ['department_id', 'title', 'description'];
+    protected $fillable = ['name', 'department_id', 'title', 'description'];
 
 
 
@@ -29,5 +29,5 @@ class Position extends Model
         return $this->belongsTo(User::class);
     }
 
-   
+
 }
