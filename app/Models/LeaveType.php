@@ -15,7 +15,7 @@ class LeaveType extends Model
 
     protected function casts(): array
     {
-        return [
+         return [
             'is_paid' => 'boolean',
         ];
     }

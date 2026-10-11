@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid , BriefcaseBusiness,Building2, Users} from 'lucide-react';
+import { BookOpen, FolderGit2, LayoutGrid , BriefcaseBusiness,Building2,CalendarCog, Users} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -46,6 +46,14 @@ const mainNavItems: GatedNavItem[] = [
         href: '/employees',
         icon: Users,
         roles:['admin','hr','manager'],
+
+    },
+
+      {
+        title: 'Leave Types',
+        href: '/leave-types',
+        icon: CalendarCog,
+        roles:['admin','hr'],
 
     },
 ];
