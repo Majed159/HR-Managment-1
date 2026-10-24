@@ -23,7 +23,7 @@ class LeaveRequestContoller extends Controller
             $query->where('status', $request->input("status"));
         }
 
-        return Inertia::render('leave-request/index', [
+        return Inertia::render('leave-requests/index', [
             'leaveRequests' => $query->paginate(12)->withQueryString(),
             'employees' => Employee::orderBy('first_name')->get(['id', 'first_name', 'last_name']),
             'leaveTypes' => LeaveType::orderBy('name')->get((['id', 'name'])),
@@ -74,11 +74,19 @@ class LeaveRequestContoller extends Controller
         });
         return back();
     }
-    // public function reject( Request $request ,LeaveRequest $leaveRequest) : RedirectResponse {
-    //     if($leaveRequest->status !== 'panding ')
-    //         {
+     public function reject(Request $request, LeaveRequest $leaveRequest): RedirectResponse
+    {
+        if ($leaveRequest->status !== 'pending') {
+            return back()->withErrors(['status' => 'This request has already been reviewed.']);
+        }
 
-    //         }
+        $leaveRequest->update([
+            'status' => 'rejected',
+            'reviewed_by' => $request->user()->id,
+            'reviewed_at' => now(),
+            'review_note' => $request->input('note'),
+        ]);
 
-    // }
+        return back();
+    }
 }
