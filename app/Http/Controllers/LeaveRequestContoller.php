@@ -35,9 +35,9 @@ class LeaveRequestContoller extends Controller
     {
         $data = $request->validate([
             'employee_id' => ['required', 'exists:employees,id'],
-            'leave_type_id' => ['required', 'exists: leave_types, id'],
+            'leave_type_id' => ['required', 'exists:leave_types,id'],
             'start_date' => ['required', 'date'],
-            'end_date' => ['required', 'date', 'after_on_equal:start_date'],
+            'end_date' => ['required', 'date', 'after_or_equal:start_date'],
             'reason' => ['nullable', 'string', 'max:1000'],
         ]);
         $days = Carbon::parse($data['start_date'])->diffInDays(Carbon::parse($data['end_date'])) + 1;

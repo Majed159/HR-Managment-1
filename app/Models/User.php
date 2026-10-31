@@ -54,4 +54,10 @@ class User extends Authenticatable implements PasskeyUser
     public function hasRole(string ...$roles) : bool {
         return in_array($this->role, $roles,true);
     }
+
+
+
+    public function employee(){
+        return $this->hasOne(Employee::class);
+    }
 }

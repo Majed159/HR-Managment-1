@@ -1,17 +1,30 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveRequestContoller;
 use App\Http\Controllers\LeaveTypeController;
+use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ReportController;
+use App\Models\Attendance;
 use App\Models\LeaveRequest;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+
+  // ── Reports & exports (HR & admins) ─────────────────────────────────────
+    Route::middleware('role:admin,hr')->group(function () {
+        Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('reports/employees.csv', [ReportController::class, 'employees'])->name('reports.employees');
+        Route::get('reports/payroll.csv', [ReportController::class, 'payroll'])->name('reports.payroll');
+    });
+
+    Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
 
     Route::middleware('role:admin,hr')->group(function () {
 
@@ -57,6 +70,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('leave-requests/{leaveRequest}/approve', [LeaveRequestContoller::class, 'approve'])->name('leave-requests.approve');
         Route::patch('leave-requests/{leaveRequest}/reject', [LeaveRequestContoller::class, 'reject'])->name('leave-requests.reject');
     });
+
+    Route::get('attendances', [AttendanceController::class, 'index'])->name('attendances.index');
+    Route::post('attendances/clock-in', [AttendanceController::class, 'clockIn'])->name('attendances.clock-in');
+    Route::post('attendances/clock-out', [AttendanceController::class, 'clockOut'])->name('attendances.clock-out');
+
+
+    //Hr admins and managers see the company-wide timesheet
+    Route::middleware('role:admin,hr,manager')->group(function(){
+        Route::get('timesheets',[AttendanceController::class,'timesheets'])->name('timesheets.index');
+    });
+
+
+    // Paroll (HR & Admins)
+    Route::middleware('role:admin,hr')->group(function(){
+        Route::get('payslips',[PayslipController::class,'index'])->name('payslips.index');
+        Route::post('payslips',[PayslipController::class,'store'])->name('payslips.store');
+        Route::get('payslips/{payslip}',[PayslipController::class,'show'])->name('payslips.show');
+
+    });
+
 });
 
 require __DIR__.'/settings.php';

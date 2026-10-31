@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid , BriefcaseBusiness,Building2,CalendarCog, Users, CalendarClock} from 'lucide-react';
+import { BookOpen, FolderGit2, LayoutGrid , BriefcaseBusiness,Building2,CalendarCog, Users, CalendarClock, Clock,CalendarCheck, Receipt, FileBarChart} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -60,8 +60,35 @@ const mainNavItems: GatedNavItem[] = [
         title: 'Leave Request',
         href: '/leave-requests',
         icon: CalendarClock,
-       
+    },
+    {
 
+        title: 'Attendances',
+        href: '/attendances',
+        icon: Clock,
+    },
+
+    {
+
+    title:'Timesheets',
+    href:'/timesheets',
+    icon:CalendarCheck,
+    roles:['admin','hr','manager']
+
+    },
+     {
+
+    title:'Payslips',
+    href:'/payslips',
+    icon:Receipt,
+    roles:['admin','hr']
+
+    },
+       {
+        title: 'Reports',
+        href: '/reports',
+        icon: FileBarChart,
+        roles: ['admin', 'hr'],
     },
 ];
 
